@@ -4,3 +4,50 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
+/* ____LOADER____STYLE___ */
+.loader-container {
+  position: absolute;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  pointer-events: none;
+}
+
+
+/* ____OWN__CLASS_NAME_____ */
+.m-0 {
+  margin: 0;
+}
+
+.dajc {
+  display: flex;
+  align-items: center;
+}
+
+.dj {
+  display: flex;
+}
+
+.f1 {
+  flex: 1;
+}
+
+.tc {
+  text-align: center;
+}
+
+.ac {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
+
+/* ____COMMON____COMPONENT___STYLE____ */

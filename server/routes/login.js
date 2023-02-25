@@ -5,6 +5,7 @@ const db = require('../sequelize')
 router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
+        console.log('username, password: ', username, password);
         if (!(Boolean(username) && Boolean(password))) return res.status(400).send('required fields are missing')
 
         const userExist = await db.Login.findOne({
@@ -14,7 +15,7 @@ router.post('/login', async (req, res) => {
         if (!userExist) return res.status(403).send('username does not exist')
         if (userExist?.password !== password) return res.status(403).send('username and password are not match')
 
-        res.json({ token: jwtTokenGeneretor })
+        res.json({ token: jwtTokenGeneretor(userExist?.id) })
 
     } catch (error) {
         res.status(500).send(error.message)

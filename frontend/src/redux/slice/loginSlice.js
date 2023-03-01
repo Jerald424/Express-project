@@ -15,7 +15,6 @@ export const loginSlice = createSlice({
         login: false,
         data: null,
         isLoading: false,
-        arr: [],
         isError: false,
     },
     extraReducers: {

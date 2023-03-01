@@ -1,17 +1,19 @@
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React, { useLayoutEffect } from "react"
+import { useSelector } from "react-redux"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { loginFn, update } from "redux/slice/loginSlice";
+import axiosInstance from "service/axiosnInstance"
 import { loginUserRoutes, unLoginRoutes } from 'utils/routes'
 
 export default function App() {
-  const dispatch = useDispatch();
   const user = useSelector(state => state.login)
-  console.log('user: ', user);
 
-  const handleLogin = () => {
-    dispatch(loginFn({ method: 'login', data: { username: "jerald", password: "0000" } }))
+  const getInitialData = async () => {
+    const token = await localStorage.getItem('token');
+    if (token !== null) axiosInstance.post('')
   }
+  useLayoutEffect(() => {
+    getInitialData()
+  }, [])
 
   return (
     <BrowserRouter>

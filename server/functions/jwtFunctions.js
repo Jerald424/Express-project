@@ -9,4 +9,18 @@ const jwtTokenGeneretor = (user_id) => {
 
 }
 
-module.exports = { jwtTokenGeneretor }
+const autherization = (req, res, next) => {
+    try {
+        const token = req.header('token');
+        if (!token) return res.status(401).send('Send token')
+        const payload = jwt.verify(token, process.env.jwtsecret)
+        req.user = payload.user_id
+        next()
+
+
+    } catch (error) {
+        res.status(401).send(error?.message)
+    }
+}
+
+module.exports = { jwtTokenGeneretor, autherization }

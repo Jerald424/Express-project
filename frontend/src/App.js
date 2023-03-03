@@ -9,7 +9,13 @@ export default function App() {
 
   const getInitialData = async () => {
     const token = await localStorage.getItem('token');
-    if (token !== null) axiosInstance.post('')
+    console.log('token: ', token);
+    if (token !== null) axiosInstance.get('is-verify', {
+      headers: {
+        'token': token
+      }
+    }).then(res => console.log('res', res))
+      .catch(err => console.log('err', err))
   }
   useLayoutEffect(() => {
     getInitialData()

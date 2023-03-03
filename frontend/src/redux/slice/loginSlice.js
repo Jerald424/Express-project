@@ -17,6 +17,11 @@ export const loginSlice = createSlice({
         isLoading: false,
         isError: false,
     },
+    reducers: {
+        loginTrue: (state, payload) => {
+            state.login = true
+        }
+    },
     extraReducers: {
         [loginFn.pending]: (state) => {
             state.isLoading = true

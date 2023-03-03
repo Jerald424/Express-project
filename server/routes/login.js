@@ -1,6 +1,7 @@
 const router = require('express').Router()
-const { jwtTokenGeneretor } = require('../functions/jwtFunctions');
-const db = require('../sequelize')
+const { jwtTokenGeneretor, autherization } = require('../functions/jwtFunctions');
+const db = require('../sequelize');
+const { isEmpty } = require('lodash')
 
 router.post('/login', async (req, res) => {
     try {
@@ -34,6 +35,20 @@ router.post('/register', async (req, res) => {
         res.json({ token: jwtTokenGeneretor(createsUser?.id) })
     } catch (error) {
         res.status(500).send(error.message)
+    }
+})
+
+router.get('/is-verify', autherization, async (req, res) => {
+    try {
+        const id = req.user
+        console.log('id: ', id);
+        const user = await db.Login.findOne({
+            where: { id }
+        })
+        res.json({ user })
+
+    } catch (error) {
+        res.status(500).send(error?.message)
     }
 })
 

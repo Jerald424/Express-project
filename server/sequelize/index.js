@@ -21,8 +21,16 @@ const db = {};
 
 db.sequelize = sequelize;
 
-db.Login = require('../models/login')(sequelize)
+db.Login = require('../models/login')(sequelize);
+db.Post = require('../models/post')(sequelize);
+db.Comments = require('../models/comments')(sequelize);
 
-db.sequelize.sync()
+db.Login.hasMany(db.Post);
+db.Login.hasOne(db.Comments);
+db.Comments.belongsTo(db.Post);
+
+
+
+db.sequelize.sync({ alter: true })
 
 module.exports = db;

@@ -1,21 +1,17 @@
 import React, { useLayoutEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { isVerify } from "redux/slice/loginSlice"
 import axiosInstance from "service/axiosnInstance"
 import { loginUserRoutes, unLoginRoutes } from 'utils/routes'
 
 export default function App() {
-  const user = useSelector(state => state.login)
+  const user = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   const getInitialData = async () => {
     const token = await localStorage.getItem('token');
-    console.log('token: ', token);
-    if (token !== null) axiosInstance.get('is-verify', {
-      headers: {
-        'token': token
-      }
-    }).then(res => console.log('res', res))
-      .catch(err => console.log('err', err))
+    if (token !== null) dispatch(isVerify(token))
   }
   useLayoutEffect(() => {
     getInitialData()

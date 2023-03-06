@@ -8,6 +8,14 @@ export const loginFn = createAsyncThunk('login', async (arg, { fulfillWithValue 
 
 })
 
+export const isVerify = createAsyncThunk('isVerify', async (arg, { }) => {
+    const data = axiosInstance.get('/is-verify', {
+        headers: {
+            'token': arg
+        }
+    })
+    return data
+})
 
 export const loginSlice = createSlice({
     name: "login",
@@ -17,11 +25,7 @@ export const loginSlice = createSlice({
         isLoading: false,
         isError: false,
     },
-    reducers: {
-        loginTrue: (state, payload) => {
-            state.login = true
-        }
-    },
+
     extraReducers: {
         [loginFn.pending]: (state) => {
             state.isLoading = true
@@ -40,10 +44,25 @@ export const loginSlice = createSlice({
             state.isLoading = false;
             state.isError = error?.message
             alert(error?.message)
+        },
+        [isVerify.pending]: (state) => {
+            state.isLoading = true
+        },
+        [isVerify.fulfilled]: (state, { payload }) => {
+            state.data = payload;
+            state.isLoading = false;
+            state.isError = false;
+            state.login = true;
+        },
+        [isVerify.rejected]: (state, { error }) => {
+            state.isLoading = false;
+            state.isError = error?.message;
+            state.login = false
+            alert(error?.message)
         }
     }
 })
 
-export const { update } = loginSlice.actions
+// export const { isVerify } = loginSlice.actions
 
 export default loginSlice;
